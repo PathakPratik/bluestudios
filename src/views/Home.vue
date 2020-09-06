@@ -13,15 +13,15 @@ import ClassesList from "@/components/ClassesList.vue";
 
 export default {
   name: "Home",
-  created(){
+  created() {
     this.$store.dispatch("fetchResult");
   },
   components: {
     DateCarousel,
     ClassesList
   },
-  computed:{
-    dates(){
+  computed: {
+    dates() {
       return this.$store.state.dates;
     }
   }
@@ -29,16 +29,16 @@ export default {
 </script>
 
 <style scoped>
-  .link-style{
-    padding: 30px 20px;
-    margin: 15px 5px;
-    border: none;
-    border-radius: 10px;
-  }
-  .heading{
-    font-weight: 600;
-    margin: 130px 5px 40px 5px;
-    color: #00AEEF;
-    font-size: 22px;
-  }
+.link-style {
+  padding: 30px 20px;
+  margin: 15px 5px;
+  border: none;
+  border-radius: 10px;
+}
+.heading {
+  font-weight: 600;
+  margin: 130px 5px 40px 5px;
+  color: #00aeef;
+  font-size: 22px;
+}
 </style>
