@@ -1,44 +1,64 @@
 <template>
   <div class="main-container" id="main-container">
-    <VueSlickCarousel
-      v-if="dates"
-      v-bind="settings"
-      ref="carousel"
-      :class="{ 'desktop-carousal': !detectMobile }"
-    >
-      <nav
-        v-for="(data, date) in dates"
-        :key="date"
-        class="pagination is-medium"
-        :class="{ 'is-rounded': !detectMobile }"
-      >
-        <div>
-          <ul class="pagination-list">
-            <li>
-              <a
-                class="pagination-link"
-                :class="{
-                  'is-current': date === selectedDate,
-                  'link-mobile-style': detectMobile,
-                  'link-desktop-style': !detectMobile
-                }"
-                @click="handleClick"
-                :data-index="data.index"
-                :data-date="date"
-              >
-                {{
-                  detectMobile
-                    ? data.day.substring(0, 1)
-                    : data.day.substring(0, 3)
-                }}
-                <br v-if="detectMobile" />
-                {{ data.date }}
-              </a>
-            </li>
-          </ul>
+    <div class="columns">
+      <div class="column is-one-fifth" v-if="!detectMobile">
+        <div class="columns is-four-fifths">
+          <div class="column" />
+          <div class="column">
+            <div class="prev-arrow" @click="prevClick" />
+          </div>
         </div>
-      </nav>
-    </VueSlickCarousel>
+      </div>
+      <div class="column is-three-fifths">
+        <VueSlickCarousel
+          v-if="dates"
+          v-bind="settings"
+          ref="carousel"
+          :class="{ 'desktop-carousal': !detectMobile }"
+        >
+          <nav
+            v-for="(data, date) in dates"
+            :key="date"
+            class="pagination is-medium"
+            :class="{ 'is-rounded': !detectMobile }"
+          >
+            <div>
+              <ul class="pagination-list">
+                <li>
+                  <a
+                    class="pagination-link"
+                    :class="{
+                      'is-current': date === selectedDate,
+                      'link-mobile-style': detectMobile,
+                      'link-desktop-style': !detectMobile
+                    }"
+                    @click="handleClick"
+                    :data-index="data.index"
+                    :data-date="date"
+                  >
+                    {{
+                      detectMobile
+                        ? data.day.substring(0, 1)
+                        : data.day.substring(0, 3)
+                    }}
+                    <br v-if="detectMobile" />
+                    {{ data.date }}
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </nav>
+        </VueSlickCarousel>
+      </div>
+      <div class="column is-one-fifth" v-if="!detectMobile">
+        <div class="columns is-one-fifth">
+          <div class="column">
+            <div class="next-arrow" @click="nextClick" />
+          </div>
+          <div class="column" />
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -70,15 +90,26 @@ export default {
       const currentIndex = this.dates[this.selectedDate].index;
       this.showNext(currentIndex);
     },
+    prevClick() {
+      this.$refs.carousel.prev();
+    },
+    nextClick() {
+      this.$refs.carousel.next();
+    },
     onScroll() {
       const top =
         window.scrollY ||
         window.scrollTop ||
         document.getElementsByTagName("html")[0].scrollTop;
 
-      top > 40
-        ? (document.getElementById("main-container").style.position = "fixed")
-        : (document.getElementById("main-container").style.position = "static");
+      if (top > 40) {
+        document.getElementById("main-container").style.position = "fixed";
+        document.getElementById("main-container").style.boxShadow =
+          "0px 0px 13px rgba(0, 0, 0, 0.1)";
+      } else {
+        document.getElementById("main-container").style.position = "static";
+        document.getElementById("main-container").style.boxShadow = "initial";
+      }
     },
     handleClick(e) {
       const selectedIndex = e.target.getAttribute("data-index");
@@ -95,8 +126,8 @@ export default {
   data() {
     return {
       settings: {
-        slidesToShow: 5,
-        slidesToScroll: 5,
+        slidesToShow: this.detectMobile ? 5 : 5,
+        slidesToScroll: this.detectMobile ? 5 : 5,
         focusOnSelect: false,
         infinite: false
       }
@@ -128,6 +159,10 @@ export default {
   margin: 15px 5px;
   border: none;
   border-radius: 10px;
+  height: 35px;
+  width: 120px;
+  font-size: 15px;
+  text-transform: uppercase;
 }
 .link-style:active {
   box-shadow: none;
@@ -138,12 +173,33 @@ export default {
   top: 0px;
   z-index: 10;
   background: white;
-  box-shadow: 0px 0px 13px rgba(0, 0, 0, 0.1);
 }
 .pagination {
   outline: none;
 }
 .desktop-carousal {
-  margin: 0% 20%;
+  margin: 0% 2%;
+}
+.prev-arrow {
+  background: url(https://s3.amazonaws.com/unode1/assets/6550/eCKYjJ6TuypxTcTcKoDQ_slider-arrow-left.svg)
+    center no-repeat;
+  height: 20px;
+  width: 25px;
+  background-size: cover;
+  font-size: 0;
+  float: left;
+  margin-top: 24px;
+  cursor: pointer;
+}
+.next-arrow {
+  background: url(https://s3.amazonaws.com/unode1/assets/6550/qfrXZZMQfOjuMEBQXiCA_slider-arrow-right.svg)
+    center no-repeat;
+  height: 20px;
+  width: 25px;
+  background-size: cover;
+  font-size: 0;
+  float: right;
+  margin-top: 24px;
+  cursor: pointer;
 }
 </style>

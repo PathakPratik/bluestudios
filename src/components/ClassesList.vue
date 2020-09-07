@@ -106,7 +106,7 @@ export default {
 
 <style scoped>
 .date-mobile-heading {
-  margin-left: 30px;
+  margin: 0% 3%;
   margin-bottom: 8px;
   text-align: left;
   scroll-margin-top: 120px;
@@ -114,7 +114,7 @@ export default {
   color: #060606;
 }
 .date-heading {
-  margin: 0% 8%;
+  margin: 0% 3%;
   margin-bottom: 8px;
   text-align: left;
   scroll-margin-top: 120px;
@@ -125,6 +125,6 @@ export default {
   margin-top: 40px;
 }
 .main-container {
-  margin: 0% 8%;
+  margin: 0% 3%;
 }
 </style>

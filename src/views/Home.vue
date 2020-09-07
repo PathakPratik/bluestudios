@@ -77,11 +77,11 @@ export default {
 .loader-style {
   position: fixed;
   top: 43%;
-  left: 43%;
+  left: 47%;
 }
 .heading {
   font-weight: 600;
-  margin: 70px 5px 40px 5px;
+  margin: 40px 5px 40px 5px;
   color: #00aeef;
   font-size: 22px;
 }
