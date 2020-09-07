@@ -23,7 +23,7 @@
               <figure class="image is-64x64">
                 <img
                   style="border-radius: 50%;"
-                  src="https://bulma.io/images/placeholders/128x128.png"
+                  src="https://dtsvkkjw40x57.cloudfront.net/images/author/15435/small_J9oH8nBQtmLv86OSJQ0w_Screen_20Shot_202020-05-23_20at_205.11.10_20PM.png"
                   alt="Image"
                 />
               </figure>

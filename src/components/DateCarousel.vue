@@ -1,5 +1,5 @@
 <template>
-  <div class="main-container">
+  <div class="main-container" id="main-container">
     <VueSlickCarousel
       v-if="dates"
       v-bind="settings"
@@ -56,6 +56,12 @@ export default {
   updated() {
     this.moveToSlide();
   },
+  beforeMount() {
+    window.addEventListener("scroll", this.onScroll);
+  },
+  beforeDestroy() {
+    window.removeEventListener("scroll", this.onScroll);
+  },
   methods: {
     showNext(index) {
       this.$refs.carousel.goTo(index);
@@ -63,6 +69,16 @@ export default {
     moveToSlide() {
       const currentIndex = this.dates[this.selectedDate].index;
       this.showNext(currentIndex);
+    },
+    onScroll() {
+      const top =
+        window.scrollY ||
+        window.scrollTop ||
+        document.getElementsByTagName("html")[0].scrollTop;
+
+      top > 40
+        ? (document.getElementById("main-container").style.position = "fixed")
+        : (document.getElementById("main-container").style.position = "static");
     },
     handleClick(e) {
       const selectedIndex = e.target.getAttribute("data-index");
@@ -117,7 +133,7 @@ export default {
   box-shadow: none;
 }
 .main-container {
-  position: fixed;
+  position: static;
   width: 100%;
   top: 0px;
   z-index: 10;
